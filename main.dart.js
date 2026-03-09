@@ -59943,7 +59943,7 @@ A.Ur.prototype={
 PZ(a){$.a5r().m(0,this,a)}}
 A.BE.prototype={
 V(a){var s=null
-return new A.rK(B.Fk,"Ahmed Essamedeen - Senior Android Developer",A.a7e(s,A.a9h(B.V,s,s,B.as),"Poppins",!0),!1,s)}}
+return new A.rK(B.Fk,"Ahmed Essamedeen - Mobile Developer",A.a7e(s,A.a9h(B.V,s,s,B.as),"Poppins",!0),!1,s)}}
 A.tu.prototype={
 an(){return new A.wk(null,null)}}
 A.wk.prototype={
@@ -59994,8 +59994,8 @@ f=d.d
 f===$&&A.b()
 f=A.eg(B.fJ,f,c)
 e=A.c([B.n,B.af],m)
-n=A.bM(c,A.Ys(B.fc,A.c([k,j,A.a5V(A.qS(!1,A.nP(A.d4(A.c([A.a6X(A.bM(c,B.xA,B.r,c,c,new A.bx(c,c,c,c,A.c([new A.cU(5,B.aJ,A.aC(102,B.n.B()>>>16&255,B.n.B()>>>8&255,B.n.B()&255),B.j,30)],q),new A.ep(B.dt,B.dr,B.aF,e,c,c),B.bo),c,120,c,c,c,c,120),new A.as(f,new A.ar(0.5,1,g),g.h("as<ai.T>"))),B.eV,B.ME,B.bK,new A.Dm(new A.a29(),B.MG,c),B.v8,B.MD,B.eV,A.i6(A.c([d.QD("Explore Work",B.n,new A.a2a()),B.Hm,d.Cd("Contact Me",B.a6,new A.a2b(),!0)],o),B.I,B.em,B.K)],o),B.I,B.em,B.K),new A.as(i,new A.ar(B.E9,B.j,h),h.h("as<ai.T>")),c,!0),i),c,c)],o),B.ix),B.r,c,c,new A.bx(c,c,c,c,c,new A.ep(B.dt,B.dr,B.aF,l,c,c),B.S),c,n.a.b*0.95,c,c,c,c,c)
-l=A.a6g(A.d4(A.c([B.MB,B.v5,B.MF,B.iv,A.Ej(A.c([d.kw("Android"),d.kw("Java"),d.kw("Kotlin"),d.kw("iOS"),d.kw("AR/VR"),d.kw("Mobile Architecture")],o),12,12)],o),B.ap,B.J,B.K))
+n=A.bM(c,A.Ys(B.fc,A.c([k,j,A.a5V(A.qS(!1,A.nP(A.d4(A.c([A.a6X(A.bM(c,B.xA,B.r,c,c,new A.bx(c,c,c,c,A.c([new A.cU(5,B.aJ,A.aC(102,B.n.B()>>>16&255,B.n.B()>>>8&255,B.n.B()&255),B.j,30)],q),new A.ep(B.dt,B.dr,B.aF,e,c,c),B.bo),c,120,c,c,c,c,120),new A.as(f,new A.ar(0.5,1,g),g.h("as<ai.T>"))),B.eV,B.MD,B.bK,new A.Dm(new A.a29(),B.MF,c),B.v8,B.MG,B.eV,A.i6(A.c([d.QD("Explore Work",B.n,new A.a2a()),B.Hm,d.Cd("Contact Me",B.a6,new A.a2b(),!0)],o),B.I,B.em,B.K)],o),B.I,B.em,B.K),new A.as(i,new A.ar(B.E9,B.j,h),h.h("as<ai.T>")),c,!0),i),c,c)],o),B.ix),B.r,c,c,new A.bx(c,c,c,c,c,new A.ep(B.dt,B.dr,B.aF,l,c,c),B.S),c,n.a.b*0.95,c,c,c,c,c)
+l=A.a6g(A.d4(A.c([B.MB,B.v5,B.ME,B.iv,A.Ej(A.c([d.kw("Android"),d.kw("Java"),d.kw("Kotlin"),d.kw("iOS"),d.kw("AR/VR"),d.kw("Mobile Architecture")],o),12,12)],o),B.ap,B.J,B.K))
 i=A.du(20)
 h=A.c([A.aC(r,B.n.B()>>>16&255,B.n.B()>>>8&255,B.n.B()&255),A.aC(r,B.af.B()>>>16&255,B.af.B()>>>8&255,B.af.B()&255)],m)
 h=d.mt("About Me",A.bM(c,A.i6(A.c([l,B.Hp,A.bM(c,B.xB,B.r,c,c,new A.bx(c,c,A.hD(A.aC(B.c.ak(76.5),B.n.B()>>>16&255,B.n.B()>>>8&255,B.n.B()&255),2),i,c,new A.ep(B.dt,B.dr,B.aF,h,c,c),B.S),c,320,c,c,c,c,320)],o),B.I,B.J,B.K),B.r,c,c,c,c,c,c,B.cL,c,c,c))
@@ -64739,14 +64739,14 @@ B.JQ=new A.h(!0,B.as,null,null,null,null,32,B.ag,null,null,null,null,null,null,n
 B.MB=new A.dp("Mobile Development Expert",null,B.JQ,null,null,null,null)
 B.KQ=new A.h(!0,B.jN,null,null,null,null,14,null,null,0.3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.MC=new A.dp("\xa9 2026 Ahmed Essamedeen. All rights reserved.",null,B.KQ,null,null,null,null)
-B.vp=new A.h(!0,B.B,null,null,null,null,16,null,null,0.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.MD=new A.dp("Crafting Exceptional Mobile Experiences | AR/VR Specialist",null,B.vp,null,null,null,null)
 B.IU=new A.h(!0,B.h,null,null,null,null,56,B.ag,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.ME=new A.dp("Ahmed Essamedeen",null,B.IU,B.bk,null,null,null)
+B.MD=new A.dp("Ahmed Essamedeen",null,B.IU,B.bk,null,null,null)
 B.K5=new A.h(!0,B.a9,null,null,null,null,16,null,null,0.3,null,null,1.8,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.MF=new A.dp("With 6+ years of professional experience, I specialize in creating robust and scalable mobile applications for Android and iOS. My expertise spans from native development to cutting-edge technologies like Augmented Reality.\n\nI'm passionate about writing clean code, optimizing performance, and delivering exceptional user experiences. I thrive in collaborative environments and am always eager to learn new technologies and best practices.",null,B.K5,null,null,null,null)
+B.ME=new A.dp("With 6+ years of professional experience, I specialize in creating robust and scalable mobile applications for Android and iOS. My expertise spans from native development to cutting-edge technologies like Augmented Reality.\n\nI'm passionate about writing clean code, optimizing performance, and delivering exceptional user experiences. I thrive in collaborative environments and am always eager to learn new technologies and best practices.",null,B.K5,null,null,null,null)
 B.K4=new A.h(!0,B.h,null,null,null,null,28,B.e3,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.MG=new A.dp("Senior Android Developer",null,B.K4,null,null,null,null)
+B.MF=new A.dp("Mobile Developer",null,B.K4,null,null,null,null)
+B.vp=new A.h(!0,B.B,null,null,null,null,16,null,null,0.5,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
+B.MG=new A.dp("Crafting Exceptional Mobile Experiences",null,B.vp,null,null,null,null)
 B.MH=new A.dp("Open for opportunities and collaborations",null,B.vp,null,null,null,null)
 B.Lr=new A.h(!0,B.as,null,null,null,null,20,B.ag,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.MI=new A.dp("Ahmed Essamedeen",null,B.Lr,null,null,null,null)

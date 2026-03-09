@@ -11,7 +11,7 @@ class PortfolioApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Ahmed Essamedeen - Senior Android Developer',
+      title: 'Ahmed Essamedeen - Mobile Developer',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -231,7 +231,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                                 colors: const [Color(0xFF3B82F6), Color(0xFF8B5CF6)],
                               ).createShader(bounds),
                               child: const Text(
-                                'Senior Android Developer',
+                                'Mobile Developer',
                                 style: TextStyle(
                                   fontSize: 28,
                                   fontWeight: FontWeight.w600,
@@ -241,7 +241,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                             ),
                             const SizedBox(height: 8),
                             const Text(
-                              'Crafting Exceptional Mobile Experiences | AR/VR Specialist',
+                              'Crafting Exceptional Mobile Experiences',
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white70,
