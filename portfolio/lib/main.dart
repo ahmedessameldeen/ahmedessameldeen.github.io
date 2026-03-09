@@ -34,11 +34,26 @@ class PortfolioHomePage extends StatefulWidget {
 }
 
 class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProviderStateMixin {
+  // keys for scrolling to specific sections
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
+
   late AnimationController _heroController;
   late Animation<double> _heroAnimation;
   late AnimationController _scrollController;
   late ScrollController _pageScrollController;
   bool _showNavBar = true;
+
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 600),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -207,10 +222,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                                   ],
                                 ),
                                 child: const Center(
-                                  child: Icon(
-                                    Icons.android,
-                                    size: 60,
-                                    color: Colors.white,
+                                  child: CircleAvatar(
+                                    radius: 60,
+                                    backgroundColor: Colors.transparent,
+                                    backgroundImage: NetworkImage(
+                                      'https://drive.google.com/uc?export=view&id=1t3jF88bZHa7n9quI2dbo0pdXQ_TFboux',
+                                    ),
                                   ),
                                 ),
                               ),
@@ -255,13 +272,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                                 _buildCTAButton(
                                   'Explore Work',
                                   const Color(0xFF3B82F6),
-                                  () {},
+                                  () => _scrollToSection(_projectsKey),
                                 ),
                                 const SizedBox(width: 20),
                                 _buildCTAButton(
                                   'Contact Me',
                                   Colors.transparent,
-                                  () {},
+                                  () => _scrollToSection(_contactKey),
                                   outlined: true,
                                 ),
                               ],
@@ -446,6 +463,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
             _buildSection(
               'Featured Projects',
               Container(
+                key: _projectsKey,
                 padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
                 child: Column(
                   children: [
@@ -538,6 +556,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
 
             // Contact Section
             Container(
+              key: _contactKey,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
