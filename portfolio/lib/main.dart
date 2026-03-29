@@ -94,7 +94,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             end: Alignment.bottomRight,
           ).createShader(bounds),
           child: const Text(
-            'Ahmed Essamedeen',
+            'Ahmed Essam',
             style: TextStyle(
               color: textLight,
               fontWeight: FontWeight.bold,
@@ -382,7 +382,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                   const SizedBox(height: 60),
                   const Text(
-                    '© 2026 Ahmed Essamedeen. Crafted with ❤️ for mobile innovation.',
+                    '© 2026 Ahmed Essam. Crafted with ❤️ for mobile innovation.',
                     style: TextStyle(
                       color: textGray,
                       fontSize: 14,
