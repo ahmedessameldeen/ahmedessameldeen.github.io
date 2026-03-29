@@ -218,34 +218,39 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             // Professional Journey
             _buildSection(
               'About Me',
-              Column(
-                children: [
-                  _buildExperienceCard(
-                    'Senior Android Developer',
-                    'SameSystem - Retail Workforce Solutions',
-                    'Jan 2020 - Present',
-                    'Developed and maintained enterprise-level retail management platform. '
-                    'Led architecture decisions, mentored junior developers, and optimized performance.',
-                  ),
-                  _buildExperienceCard(
-                    'Mobile Developer',
-                    'Argaam Media',
-                    'Sep 2019 - Apr 2020',
-                    'Built media streaming and distribution platform. Implemented real-time data syncing.',
-                  ),
-                  _buildExperienceCard(
-                    'Mobile Developer',
-                    'Code95',
-                    'Mar 2017 - Sep 2019',
-                    'Developed multiple commercial Android applications. Led UI/UX improvements.',
-                  ),
-                  _buildExperienceCard(
-                    'Android Developer',
-                    'magdsoft',
-                    'Mar 2016 - Mar 2017',
-                    'Built Android applications from concept to production. Implemented Firebase integration.',
-                  ),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildCareerStep(
+                      'magdsoft',
+                      'Android Developer',
+                      'Mar 2016 - Mar 2017',
+                      'https://www.magdsoft.com/teamwork',
+                    ),
+                    _buildCareerArrow(),
+                    _buildCareerStep(
+                      'Code95',
+                      'Mobile Developer',
+                      'Mar 2017 - Sep 2019',
+                      'https://code95.com/',
+                    ),
+                    _buildCareerArrow(),
+                    _buildCareerStep(
+                      'Argaam Media',
+                      'Mobile Developer',
+                      'Sep 2019 - Apr 2020',
+                      'https://www.media.argaam.com/',
+                    ),
+                    _buildCareerArrow(),
+                    _buildCareerStep(
+                      'SameSystem',
+                      'Senior Android Developer',
+                      'Jan 2020 - Present',
+                      'https://www.samesystem.com/',
+                    ),
+                  ],
+                ),
               ),
               key: _aboutKey,
             ),
@@ -481,6 +486,75 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildCareerStep(String company, String role, String period, String url) {
+    return GestureDetector(
+      onTap: () => launchUrl(Uri.parse(url)),
+      child: Container(
+        width: 280,
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: cardBg,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: accentColor.withOpacity(0.4)),
+          boxShadow: [
+            BoxShadow(
+              color: accentColor.withOpacity(0.15),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+          gradient: LinearGradient(
+            colors: [cardBg.withOpacity(0.95), cardBg],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              company,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: textLight,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              role,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: accentSecondary,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              period,
+              style: const TextStyle(
+                fontSize: 14,
+                color: textGray,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCareerArrow() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4),
+      child: Icon(
+        Icons.arrow_forward_ios,
+        color: accentColor,
+        size: 16,
       ),
     );
   }
