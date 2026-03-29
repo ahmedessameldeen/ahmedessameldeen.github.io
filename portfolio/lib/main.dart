@@ -129,7 +129,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       end: Alignment.bottomRight,
                     ).createShader(bounds),
                     child: const Text(
-                      'Ahmed Essamedeen',
+                      'Ahmed Essam',
                       style: TextStyle(
                         fontSize: 64,
                         fontWeight: FontWeight.bold,
@@ -147,7 +147,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       borderRadius: BorderRadius.circular(25),
                     ),
                     child: const Text(
-                      '🚀 Web & Mobile Developer',
+                      '🚀 Mobile Developer',
                       style: TextStyle(
                         fontSize: 20,
                         color: accentColor,
@@ -217,7 +217,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
             // Professional Journey
             _buildSection(
-              'About Me',
+              'My Journey',
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
