@@ -5,13 +5,13 @@ void main() {
   runApp(const PortfolioApp());
 }
 
-const Color primaryBg = Color(0xFF0F0F23);
-const Color secondaryBg = Color(0xFF1A1A2E);
-const Color accentColor = Color(0xFF00D4FF);
+const Color primaryBg = Color(0xFF0A0A0A);
+const Color secondaryBg = Color(0xFF1A1A1A);
+const Color accentColor = Color(0xFF007BFF);
 const Color textLight = Color(0xFFFFFFFF);
 const Color textGray = Color(0xFFB0B0B0);
-const Color cardBg = Color(0xFF16213E);
-const Color borderColor = Color(0xFF0F3460);
+const Color cardBg = Color(0xFF1E1E1E);
+const Color borderColor = Color(0xFF333333);
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
@@ -41,6 +41,11 @@ class PortfolioHomePage extends StatefulWidget {
 
 class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey _heroKey = GlobalKey();
+  final GlobalKey _aboutKey = GlobalKey();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _skillsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
 
   @override
   void dispose() {
@@ -48,80 +53,99 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     super.dispose();
   }
 
+  void _scrollToSection(GlobalKey key) {
+    final context = key.currentContext;
+    if (context != null) {
+      Scrollable.ensureVisible(
+        context,
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: primaryBg.withOpacity(0.9),
+        elevation: 0,
+        title: const Text(
+          'Ahmed Essamedeen',
+          style: TextStyle(
+            color: textLight,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          _buildNavItem('Home', _heroKey),
+          _buildNavItem('About', _aboutKey),
+          _buildNavItem('Projects', _projectsKey),
+          _buildNavItem('Skills', _skillsKey),
+          _buildNavItem('Contact', _contactKey),
+          const SizedBox(width: 20),
+        ],
+      ),
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Column(
           children: [
             // Hero Section
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [primaryBg, secondaryBg],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
+              key: _heroKey,
+              padding: const EdgeInsets.symmetric(vertical: 120, horizontal: 40),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
                     'Ahmed Essamedeen',
                     style: TextStyle(
-                      fontSize: 56,
+                      fontSize: 64,
                       fontWeight: FontWeight.bold,
                       color: textLight,
                       height: 1.1,
-                      shadows: [
-                        Shadow(
-                          color: accentColor,
-                          blurRadius: 10,
-                          offset: Offset(0, 0),
-                        ),
-                      ],
                     ),
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     decoration: BoxDecoration(
                       color: accentColor.withOpacity(0.1),
                       border: Border.all(color: accentColor.withOpacity(0.3)),
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(25),
                     ),
                     child: const Text(
-                      '🚀 Mobile Developer | Android & iOS Expert',
+                      '🚀 Web & Mobile Developer',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         color: accentColor,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 40),
                   const Text(
-                    'Crafting exceptional mobile experiences with cutting-edge technology. '
-                    'Specializing in Android & iOS development with 6+ years of expertise '
-                    'in building scalable, high-performance applications.',
+                    'Crafting exceptional digital experiences with cutting-edge technology. '
+                    'Specializing in web and mobile development with modern frameworks.',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       color: textGray,
                       height: 1.6,
                     ),
-                    maxLines: 4,
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 50),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       ElevatedButton(
-                        onPressed: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
+                        onPressed: () => _scrollToSection(_projectsKey),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: accentColor,
                           foregroundColor: primaryBg,
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -129,7 +153,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                           shadowColor: accentColor.withOpacity(0.3),
                         ),
                         child: const Text(
-                          '💌 Get in Touch',
+                          'View My Work',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16,
@@ -138,16 +162,16 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       ),
                       const SizedBox(width: 20),
                       OutlinedButton(
-                        onPressed: () => launchUrl(Uri.parse('https://github.com/ahmedessameldeen')),
+                        onPressed: () => _scrollToSection(_contactKey),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: accentColor),
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
                         child: const Text(
-                          '📱 View My Work',
+                          'Contact Me',
                           style: TextStyle(
                             color: accentColor,
                             fontWeight: FontWeight.bold,
@@ -163,7 +187,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
             // Professional Journey
             _buildSection(
-              'Professional Journey',
+              'About Me',
               Column(
                 children: [
                   _buildExperienceCard(
@@ -193,11 +217,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                 ],
               ),
+              key: _aboutKey,
             ),
 
             // Tech Arsenal
             _buildSection(
-              'Tech Arsenal',
+              'Tech Stack',
               Wrap(
                 spacing: 16,
                 runSpacing: 16,
@@ -221,7 +246,12 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             // Featured Projects
             _buildSection(
               'Featured Projects',
-              Column(
+              GridView.count(
+                crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 3 : (MediaQuery.of(context).size.width > 800 ? 2 : 1),
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   _buildProjectCard(
                     'Retail Workforce Solutions',
@@ -248,12 +278,18 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ),
                 ],
               ),
+              key: _projectsKey,
             ),
 
             // Skills Matrix
             _buildSection(
               'Skills & Proficiency',
-              Column(
+              GridView.count(
+                crossAxisCount: MediaQuery.of(context).size.width > 800 ? 2 : 1,
+                crossAxisSpacing: 40,
+                mainAxisSpacing: 40,
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
                   _buildSkillRow('Java', 0.95),
                   _buildSkillRow('Android Development', 0.95),
@@ -263,18 +299,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   _buildSkillRow('AR/VR Development', 0.80),
                 ],
               ),
+              key: _skillsKey,
             ),
 
             // Contact Section
             Container(
+              key: _contactKey,
               padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [secondaryBg, primaryBg],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -295,36 +326,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 40),
-                  ElevatedButton(
-                    onPressed: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: accentColor,
-                      foregroundColor: primaryBg,
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 8,
-                      shadowColor: accentColor.withOpacity(0.3),
-                    ),
-                    child: const Text(
-                      '📧 Start a Conversation',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ),
                   const SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      _buildSocialLink('GitHub', 'https://github.com/ahmedessameldeen'),
-                      const SizedBox(width: 32),
-                      _buildSocialLink('LinkedIn', 'https://linkedin.com/in/ahmedessamedeen'),
-                      const SizedBox(width: 32),
-                      _buildSocialLink('Email', 'mailto:ahmedessamedeen@gmail.com'),
+                      _buildContactForm(),
+                      const SizedBox(width: 60),
+                      _buildContactInfo(),
                     ],
                   ),
                   const SizedBox(height: 60),
@@ -344,8 +352,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     );
   }
 
-  Widget _buildSection(String title, Widget child) {
+  Widget _buildSection(String title, Widget child, {GlobalKey? key}) {
     return Container(
+      key: key,
       padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,17 +573,197 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     );
   }
 
-  Widget _buildSocialLink(String label, String url) {
-    return GestureDetector(
-      onTap: () => launchUrl(Uri.parse(url)),
+  Widget _buildNavItem(String label, GlobalKey key) {
+    return TextButton(
+      onPressed: () => _scrollToSection(key),
       child: Text(
         label,
         style: const TextStyle(
+          color: textLight,
           fontSize: 16,
-          color: accentColor,
-          fontWeight: FontWeight.w600,
-          decoration: TextDecoration.underline,
-          decorationColor: accentColor,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildContactForm() {
+    return Container(
+      width: 400,
+      padding: const EdgeInsets.all(32),
+      decoration: BoxDecoration(
+        color: cardBg,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: borderColor),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Send Message',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: textLight,
+            ),
+          ),
+          const SizedBox(height: 24),
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Name',
+              labelStyle: const TextStyle(color: textGray),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: borderColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: accentColor),
+              ),
+              filled: true,
+              fillColor: secondaryBg,
+            ),
+            style: const TextStyle(color: textLight),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            decoration: InputDecoration(
+              labelText: 'Email',
+              labelStyle: const TextStyle(color: textGray),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: borderColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: accentColor),
+              ),
+              filled: true,
+              fillColor: secondaryBg,
+            ),
+            style: const TextStyle(color: textLight),
+          ),
+          const SizedBox(height: 16),
+          TextField(
+            maxLines: 4,
+            decoration: InputDecoration(
+              labelText: 'Message',
+              labelStyle: const TextStyle(color: textGray),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: borderColor),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: borderColor),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: accentColor),
+              ),
+              filled: true,
+              fillColor: secondaryBg,
+            ),
+            style: const TextStyle(color: textLight),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            onPressed: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: accentColor,
+              foregroundColor: primaryBg,
+              padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              minimumSize: const Size(double.infinity, 50),
+            ),
+            child: const Text(
+              'Send Message',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContactInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Get in Touch',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: textLight,
+          ),
+        ),
+        const SizedBox(height: 24),
+        _buildContactItem('📧', 'ahmedessamedeen@gmail.com'),
+        const SizedBox(height: 16),
+        _buildContactItem('📍', 'Egypt'),
+        const SizedBox(height: 16),
+        _buildContactItem('💼', 'Available for opportunities'),
+        const SizedBox(height: 32),
+        Row(
+          children: [
+            _buildSocialIcon('GitHub', 'https://github.com/ahmedessameldeen'),
+            const SizedBox(width: 16),
+            _buildSocialIcon('LinkedIn', 'https://linkedin.com/in/ahmedessamedeen'),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildContactItem(String icon, String text) {
+    return Row(
+      children: [
+        Text(
+          icon,
+          style: const TextStyle(fontSize: 20),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 16,
+            color: textGray,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSocialIcon(String platform, String url) {
+    return GestureDetector(
+      onTap: () => launchUrl(Uri.parse(url)),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: cardBg,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: borderColor),
+        ),
+        child: Text(
+          platform,
+          style: const TextStyle(
+            color: accentColor,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
