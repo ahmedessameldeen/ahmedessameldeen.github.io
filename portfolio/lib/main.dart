@@ -5,12 +5,13 @@ void main() {
   runApp(const PortfolioApp());
 }
 
-const Color primaryBg = Color(0xFFFAFAFA);
-const Color secondaryBg = Color(0xFFF3F3F3);
-const Color textDark = Color(0xFF1A1A1A);
-const Color textGray = Color(0xFF666666);
-const Color accentColor = Color(0xFF0066CC);
-const Color borderColor = Color(0xFFE8E8E8);
+const Color primaryBg = Color(0xFF0F0F23);
+const Color secondaryBg = Color(0xFF1A1A2E);
+const Color accentColor = Color(0xFF00D4FF);
+const Color textLight = Color(0xFFFFFFFF);
+const Color textGray = Color(0xFFB0B0B0);
+const Color cardBg = Color(0xFF16213E);
+const Color borderColor = Color(0xFF0F3460);
 
 class PortfolioApp extends StatelessWidget {
   const PortfolioApp({super.key});
@@ -24,6 +25,7 @@ class PortfolioApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: primaryBg,
         fontFamily: 'Poppins',
+        brightness: Brightness.dark,
       ),
       home: const PortfolioHomePage(),
     );
@@ -55,77 +57,101 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           children: [
             // Hero Section
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 40),
+              padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [primaryBg, secondaryBg],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
                     'Ahmed Essamedeen',
                     style: TextStyle(
-                      fontSize: 48,
+                      fontSize: 56,
                       fontWeight: FontWeight.bold,
-                      color: textDark,
-                      height: 1.2,
+                      color: textLight,
+                      height: 1.1,
+                      shadows: [
+                        Shadow(
+                          color: accentColor,
+                          blurRadius: 10,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: accentColor.withOpacity(0.1),
+                      border: Border.all(color: accentColor.withOpacity(0.3)),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Text(
+                      '🚀 Mobile Developer | Android & iOS Expert',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: accentColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
                   const Text(
-                    'Mobile Developer | Java · Android · Kotlin · iOS',
+                    'Crafting exceptional mobile experiences with cutting-edge technology. '
+                    'Specializing in Android & iOS development with 6+ years of expertise '
+                    'in building scalable, high-performance applications.',
                     style: TextStyle(
                       fontSize: 18,
-                      color: textGray,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  const Text(
-                    'I build robust, scalable mobile applications that solve real problems. '
-                    'With 6+ years of experience in Android and iOS development, '
-                    'I specialize in creating high-performance apps with clean architecture.',
-                    style: TextStyle(
-                      fontSize: 16,
                       color: textGray,
                       height: 1.6,
                     ),
                     maxLines: 4,
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 40),
                   Row(
                     children: [
-                      GestureDetector(
-                        onTap: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                          decoration: BoxDecoration(
-                            color: accentColor,
-                            borderRadius: BorderRadius.circular(8),
+                      ElevatedButton(
+                        onPressed: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: accentColor,
+                          foregroundColor: primaryBg,
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Text(
-                            'Get in Touch',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
+                          elevation: 8,
+                          shadowColor: accentColor.withOpacity(0.3),
+                        ),
+                        child: const Text(
+                          '💌 Get in Touch',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 16),
-                      GestureDetector(
-                        onTap: () => launchUrl(Uri.parse('https://github.com/ahmedessameldeen')),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: borderColor),
-                            borderRadius: BorderRadius.circular(8),
+                      const SizedBox(width: 20),
+                      OutlinedButton(
+                        onPressed: () => launchUrl(Uri.parse('https://github.com/ahmedessameldeen')),
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: accentColor),
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Text(
-                            'View GitHub',
-                            style: TextStyle(
-                              color: textDark,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                            ),
+                        ),
+                        child: const Text(
+                          '📱 View My Work',
+                          style: TextStyle(
+                            color: accentColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -241,55 +267,72 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
             // Contact Section
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 40),
+              padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [secondaryBg, primaryBg],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const Text(
-                    'Let\'s Build Something Amazing',
+                    '🚀 Let\'s Build Something Amazing',
                     style: TextStyle(
-                      fontSize: 36,
+                      fontSize: 42,
                       fontWeight: FontWeight.bold,
-                      color: textDark,
+                      color: textLight,
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 20),
                   const Text(
-                    'Open for exciting opportunities, collaborations, and fresh challenges',
+                    'Ready for exciting opportunities, collaborations, and fresh challenges in mobile development',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       color: textGray,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 32),
-                  GestureDetector(
-                    onTap: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
-                    child: Text(
-                      'ahmedessamedeen@gmail.com',
-                      style: const TextStyle(
-                        fontSize: 18,
+                  const SizedBox(height: 40),
+                  ElevatedButton(
+                    onPressed: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: accentColor,
+                      foregroundColor: primaryBg,
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 8,
+                      shadowColor: accentColor.withOpacity(0.3),
+                    ),
+                    child: const Text(
+                      '📧 Start a Conversation',
+                      style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: accentColor,
+                        fontSize: 18,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       _buildSocialLink('GitHub', 'https://github.com/ahmedessameldeen'),
-                      const SizedBox(width: 24),
+                      const SizedBox(width: 32),
                       _buildSocialLink('LinkedIn', 'https://linkedin.com/in/ahmedessamedeen'),
-                      const SizedBox(width: 24),
+                      const SizedBox(width: 32),
                       _buildSocialLink('Email', 'mailto:ahmedessamedeen@gmail.com'),
                     ],
                   ),
-                  const SizedBox(height: 48),
+                  const SizedBox(height: 60),
                   const Text(
-                    '© 2026 Ahmed Essamedeen. All rights reserved.',
+                    '© 2026 Ahmed Essamedeen. Crafted with ❤️ for mobile innovation.',
                     style: TextStyle(
                       color: textGray,
-                      fontSize: 12,
+                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -303,19 +346,19 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   Widget _buildSection(String title, Widget child) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
+      padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             title,
             style: const TextStyle(
-              fontSize: 32,
+              fontSize: 36,
               fontWeight: FontWeight.bold,
-              color: textDark,
+              color: textLight,
             ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 40),
           child,
         ],
       ),
@@ -330,11 +373,18 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBg,
         border: Border.all(color: borderColor),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: accentColor.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,34 +392,34 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: textDark,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            company,
-            style: const TextStyle(
-              fontSize: 14,
-              color: textGray,
-              fontWeight: FontWeight.w500,
+              color: textLight,
             ),
           ),
           const SizedBox(height: 8),
           Text(
-            period,
+            company,
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 16,
               color: accentColor,
               fontWeight: FontWeight.w600,
             ),
           ),
           const SizedBox(height: 12),
           Text(
-            description,
+            period,
             style: const TextStyle(
               fontSize: 14,
+              color: textGray,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            description,
+            style: const TextStyle(
+              fontSize: 16,
               color: textGray,
               height: 1.6,
             ),
@@ -381,18 +431,24 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   Widget _buildTechBadge(String tech) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: secondaryBg,
-        border: Border.all(color: borderColor),
-        borderRadius: BorderRadius.circular(20),
+        color: cardBg,
+        border: Border.all(color: accentColor.withOpacity(0.3)),
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(
+            color: accentColor.withOpacity(0.1),
+            blurRadius: 5,
+          ),
+        ],
       ),
       child: Text(
         tech,
         style: const TextStyle(
-          fontSize: 13,
-          color: textDark,
-          fontWeight: FontWeight.w500,
+          fontSize: 14,
+          color: textLight,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -405,11 +461,18 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(32),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardBg,
         border: Border.all(color: borderColor),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: accentColor.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -417,37 +480,38 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           Text(
             title,
             style: const TextStyle(
-              fontSize: 18,
+              fontSize: 22,
               fontWeight: FontWeight.bold,
-              color: textDark,
+              color: textLight,
             ),
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: 16),
           Text(
             description,
             style: const TextStyle(
-              fontSize: 14,
+              fontSize: 16,
               color: textGray,
               height: 1.6,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: 10,
+            runSpacing: 10,
             children: tags
                 .map((tag) => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         color: accentColor.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(color: accentColor.withOpacity(0.3)),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         tag,
                         style: const TextStyle(
-                          fontSize: 11,
+                          fontSize: 12,
                           color: accentColor,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ))
@@ -460,7 +524,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   Widget _buildSkillRow(String skill, double proficiency) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -470,26 +534,27 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
               Text(
                 skill,
                 style: const TextStyle(
-                  fontSize: 14,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: textDark,
+                  color: textLight,
                 ),
               ),
               Text(
                 '${(proficiency * 100).toInt()}%',
                 style: const TextStyle(
-                  fontSize: 13,
-                  color: textGray,
+                  fontSize: 14,
+                  color: accentColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 12),
           ClipRRect(
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
               value: proficiency,
-              minHeight: 4,
+              minHeight: 8,
               backgroundColor: borderColor,
               valueColor: const AlwaysStoppedAnimation<Color>(accentColor),
             ),
@@ -505,9 +570,11 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       child: Text(
         label,
         style: const TextStyle(
-          fontSize: 14,
+          fontSize: 16,
           color: accentColor,
           fontWeight: FontWeight.w600,
+          decoration: TextDecoration.underline,
+          decorationColor: accentColor,
         ),
       ),
     );
