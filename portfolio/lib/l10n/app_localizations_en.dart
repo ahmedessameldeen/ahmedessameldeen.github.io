@@ -48,7 +48,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get projectsTitle => 'Featured Projects';
 
   @override
-  String get skillsTitle => 'Tech Stack';
+  String get skillsTitle => 'Skills';
 
   @override
   String get contactTitle => 'Let\'s Connect';

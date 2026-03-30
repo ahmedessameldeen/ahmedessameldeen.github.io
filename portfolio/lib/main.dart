@@ -311,7 +311,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 key: _aboutKey,
               ),
 
-              // Tech Arsenal
+              // Skills
               _buildSection(
                 AppLocalizations.of(context)!.skillsTitle,
                 GridView.count(
@@ -337,6 +337,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     _buildTechIcon('Git', Icons.commit),
                   ],
                 ),
+                key: _skillsKey,
               ),
 
               // Featured Projects
@@ -377,29 +378,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ],
                 ),
                 key: _projectsKey,
-              ),
-
-              // Skills Matrix
-              _buildSection(
-                'Skills & Proficiency',
-                GridView.count(
-                  crossAxisCount: MediaQuery.of(context).size.width > 800
-                      ? 2
-                      : 1,
-                  crossAxisSpacing: 40,
-                  mainAxisSpacing: 40,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    _buildSkillRow('Java', 0.95),
-                    _buildSkillRow('Android Development', 0.95),
-                    _buildSkillRow('Mobile Architecture', 0.90),
-                    _buildSkillRow('Kotlin', 0.85),
-                    _buildSkillRow('iOS Development', 0.85),
-                    _buildSkillRow('AR/VR Development', 0.80),
-                  ],
-                ),
-                key: _skillsKey,
               ),
 
               // Contact Section
@@ -657,28 +635,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     );
   }
 
-  Widget _buildTechBadge(String tech) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        color: cardBg,
-        border: Border.all(color: accentColor.withOpacity(0.3)),
-        borderRadius: BorderRadius.circular(25),
-        boxShadow: [
-          BoxShadow(color: accentColor.withOpacity(0.1), blurRadius: 5),
-        ],
-      ),
-      child: Text(
-        tech,
-        style: const TextStyle(
-          fontSize: 14,
-          color: textLight,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
-
   Widget _buildTechIcon(String name, IconData icon) {
     return Container(
       padding: const EdgeInsets.all(20),
@@ -842,48 +798,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                   ],
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSkillRow(String skill, double proficiency) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                skill,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: textLight,
-                ),
-              ),
-              Text(
-                '${(proficiency * 100).toInt()}%',
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: accentColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: LinearProgressIndicator(
-              value: proficiency,
-              minHeight: 8,
-              backgroundColor: borderColor,
-              valueColor: const AlwaysStoppedAnimation<Color>(accentColor),
             ),
           ),
         ],

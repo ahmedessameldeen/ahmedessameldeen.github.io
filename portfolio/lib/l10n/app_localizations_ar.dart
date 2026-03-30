@@ -48,7 +48,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get projectsTitle => 'المشاريع المميزة';
 
   @override
-  String get skillsTitle => 'التقنيات المستخدمة';
+  String get skillsTitle => 'المهارات';
 
   @override
   String get contactTitle => 'دعنا نتواصل';
