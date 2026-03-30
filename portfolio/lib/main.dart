@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:provider/provider.dart';
+import 'l10n/app_localizations.dart';
+import 'providers/language_provider.dart';
+import 'widgets/language_switch.dart';
 
 void main() {
-  runApp(const PortfolioApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => LanguageProvider(),
+      child: const PortfolioApp(),
+    ),
+  );
 }
 
 const Color primaryBg = Color(0xFF030014);
@@ -20,16 +29,33 @@ class PortfolioApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Ahmed Essam - Mobile Developer',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        scaffoldBackgroundColor: primaryBg,
-        fontFamily: 'Poppins',
-        brightness: Brightness.dark,
-      ),
-      home: const PortfolioHomePage(),
+    return Consumer<LanguageProvider>(
+      builder: (context, languageProvider, child) {
+        return MaterialApp(
+          title: 'Ahmed Essam - Mobile Developer',
+          debugShowCheckedModeBanner: false,
+          locale: languageProvider.locale,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          localeResolutionCallback: (locale, supportedLocales) {
+            // Check if the current device locale is supported
+            for (final supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale?.languageCode) {
+                return supportedLocale;
+              }
+            }
+            // If device locale of Arabic not supported, use English
+            return supportedLocales.first;
+          },
+          theme: ThemeData(
+            useMaterial3: true,
+            scaffoldBackgroundColor: primaryBg,
+            fontFamily: 'Poppins',
+            brightness: Brightness.dark,
+          ),
+          home: const PortfolioHomePage(),
+        );
+      },
     );
   }
 }
@@ -68,330 +94,364 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: primaryBg.withOpacity(0.8),
-        elevation: 0,
-        shadowColor: Colors.transparent,
-        surfaceTintColor: Colors.transparent,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                primaryBg.withOpacity(0.1),
-                secondaryBg.withOpacity(0.1),
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-        ),
-        title: ShaderMask(
-          shaderCallback: (bounds) => LinearGradient(
-            colors: [accentColor, accentSecondary],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ).createShader(bounds),
-          child: const Text(
-            'Ahmed Essam',
-            style: TextStyle(
-              color: textLight,
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-            ),
-          ),
-        ),
-        actions: [
-          _buildNavItem('Home', _heroKey),
-          _buildNavItem('About', _aboutKey),
-          _buildNavItem('Projects', _projectsKey),
-          _buildNavItem('Skills', _skillsKey),
-          _buildNavItem('Contact', _contactKey),
-          const SizedBox(width: 20),
-        ],
-      ),
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            // Hero Section
-            Container(
-              key: _heroKey,
-              padding: const EdgeInsets.symmetric(vertical: 120, horizontal: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ShaderMask(
-                    shaderCallback: (bounds) => LinearGradient(
-                      colors: [accentColor, accentSecondary],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ).createShader(bounds),
-                    child: const Text(
-                      'Ahmed Essam',
-                      style: TextStyle(
-                        fontSize: 64,
-                        fontWeight: FontWeight.bold,
-                        color: textLight,
-                        height: 1.1,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: accentColor.withOpacity(0.1),
-                      border: Border.all(color: accentColor.withOpacity(0.3)),
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: const Text(
-                      '🚀 Mobile Developer',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: accentColor,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 40),
-                  const Text(
-                    'Crafting exceptional digital experiences with cutting-edge technology. '
-                    'Specializing in web and mobile development with modern frameworks.',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: textGray,
-                      height: 1.6,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () => _scrollToSection(_projectsKey),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: accentColor,
-                          foregroundColor: primaryBg,
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 8,
-                          shadowColor: accentColor.withOpacity(0.3),
-                        ),
-                        child: const Text(
-                          'View My Work',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      OutlinedButton(
-                        onPressed: () => _scrollToSection(_contactKey),
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: accentColor),
-                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        child: const Text(
-                          'Contact Me',
-                          style: TextStyle(
-                            color: accentColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+    final languageProvider = Provider.of<LanguageProvider>(context);
+    return Directionality(
+      textDirection: languageProvider.isRTL
+          ? TextDirection.rtl
+          : TextDirection.ltr,
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: primaryBg.withOpacity(0.8),
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  primaryBg.withOpacity(0.1),
+                  secondaryBg.withOpacity(0.1),
                 ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
             ),
-
-            // Professional Journey
-            _buildSection(
-              'My Journey',
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+          ),
+          title: ShaderMask(
+            shaderCallback: (bounds) => LinearGradient(
+              colors: [accentColor, accentSecondary],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ).createShader(bounds),
+            child: const Text(
+              'Ahmed Essam',
+              style: TextStyle(
+                color: textLight,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          actions: [
+            _buildNavItem(AppLocalizations.of(context)!.navHome, _heroKey),
+            _buildNavItem(AppLocalizations.of(context)!.navJourney, _aboutKey),
+            _buildNavItem(
+              AppLocalizations.of(context)!.navProjects,
+              _projectsKey,
+            ),
+            _buildNavItem(AppLocalizations.of(context)!.navSkills, _skillsKey),
+            _buildNavItem(
+              AppLocalizations.of(context)!.navContact,
+              _contactKey,
+            ),
+            const LanguageSwitch(),
+            const SizedBox(width: 20),
+          ],
+        ),
+        body: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              // Hero Section
+              Container(
+                key: _heroKey,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 120,
+                  horizontal: 40,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _buildCareerStep(
-                      'magdsoft',
-                      'Android Developer',
-                      'Mar 2016 - Mar 2017',
-                      'https://www.magdsoft.com/teamwork',
+                    ShaderMask(
+                      shaderCallback: (bounds) => LinearGradient(
+                        colors: [accentColor, accentSecondary],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds),
+                      child: Text(
+                        AppLocalizations.of(context)!.heroName,
+                        style: const TextStyle(
+                          fontSize: 64,
+                          fontWeight: FontWeight.bold,
+                          color: textLight,
+                          height: 1.1,
+                        ),
+                      ),
                     ),
-                    _buildCareerArrow(),
-                    _buildCareerStep(
-                      'Code95',
-                      'Mobile Developer',
-                      'Mar 2017 - Sep 2019',
-                      'https://code95.com/',
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: accentColor.withOpacity(0.1),
+                        border: Border.all(color: accentColor.withOpacity(0.3)),
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Text(
+                        '🚀 ${AppLocalizations.of(context)!.heroTitle}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: accentColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                    _buildCareerArrow(),
-                    _buildCareerStep(
-                      'Argaam Media',
-                      'Mobile Developer',
-                      'Sep 2019 - Apr 2020',
-                      'https://www.media.argaam.com/',
+                    const SizedBox(height: 40),
+                    Text(
+                      AppLocalizations.of(context)!.heroDescription,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: textGray,
+                        height: 1.6,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    _buildCareerArrow(),
-                    _buildCareerStep(
-                      'SameSystem',
-                      'Senior Android Developer',
-                      'Jan 2020 - Present',
-                      'https://www.samesystem.com/',
+                    const SizedBox(height: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => _scrollToSection(_projectsKey),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: accentColor,
+                            foregroundColor: primaryBg,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 40,
+                              vertical: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            elevation: 8,
+                            shadowColor: accentColor.withOpacity(0.3),
+                          ),
+                          child: Text(
+                            AppLocalizations.of(context)!.heroCta,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        OutlinedButton(
+                          onPressed: () => _scrollToSection(_contactKey),
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: accentColor),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 40,
+                              vertical: 16,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          child: Text(
+                            AppLocalizations.of(context)!.heroContact,
+                            style: TextStyle(
+                              color: accentColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-              key: _aboutKey,
-            ),
 
-            // Tech Arsenal
-            _buildSection(
-              'Tech Stack',
-              GridView.count(
-                crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 6 : (MediaQuery.of(context).size.width > 800 ? 4 : 3),
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _buildTechIcon('Android', Icons.android),
-                  _buildTechIcon('iOS', Icons.apple),
-                  _buildTechIcon('Flutter', Icons.flutter_dash),
-                  _buildTechIcon('Java', Icons.code),
-                  _buildTechIcon('Kotlin', Icons.code),
-                  _buildTechIcon('Swift', Icons.code),
-                  _buildTechIcon('Firebase', Icons.cloud),
-                  _buildTechIcon('REST API', Icons.api),
-                  _buildTechIcon('SQLite', Icons.storage),
-                  _buildTechIcon('MVVM', Icons.architecture),
-                  _buildTechIcon('Clean Code', Icons.cleaning_services),
-                  _buildTechIcon('Git', Icons.commit),
-                ],
+              // Professional Journey
+              _buildSection(
+                AppLocalizations.of(context)!.journeyTitle,
+                SizedBox(
+                  width: double.infinity,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildCareerStep(
+                          AppLocalizations.of(context)!.companyMagdsoft,
+                          AppLocalizations.of(context)!.jobAndroidDeveloper,
+                          AppLocalizations.of(context)!.period2016_2017,
+                          'https://www.magdsoft.com/teamwork',
+                        ),
+                        _buildCareerArrow(),
+                        _buildCareerStep(
+                          AppLocalizations.of(context)!.companyCode95,
+                          AppLocalizations.of(context)!.jobMobileDeveloper,
+                          AppLocalizations.of(context)!.period2017_2019,
+                          'https://code95.com/',
+                        ),
+                        _buildCareerArrow(),
+                        _buildCareerStep(
+                          AppLocalizations.of(context)!.companyArgaam,
+                          AppLocalizations.of(context)!.jobMobileDeveloper,
+                          AppLocalizations.of(context)!.period2019_2020,
+                          'https://www.media.argaam.com/',
+                        ),
+                        _buildCareerArrow(),
+                        _buildCareerStep(
+                          AppLocalizations.of(context)!.companySamesystem,
+                          AppLocalizations.of(
+                            context,
+                          )!.jobSeniorAndroidDeveloper,
+                          AppLocalizations.of(context)!.period2020_present,
+                          'https://www.samesystem.com/',
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                key: _aboutKey,
               ),
-            ),
 
-            // Featured Projects
-            _buildSection(
-              'Featured Projects',
-              GridView.count(
-                crossAxisCount: MediaQuery.of(context).size.width > 1200 ? 3 : (MediaQuery.of(context).size.width > 800 ? 2 : 1),
-                crossAxisSpacing: 20,
-                mainAxisSpacing: 20,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _buildProjectCard(
-                    'Retail Workforce Solutions',
-                    'Enterprise platform for retail management with real-time employee scheduling '
-                    'and task synchronization across multiple stores.',
-                    ['Android', 'Java', 'REST API', 'SQLite'],
-                  ),
-                  _buildProjectCard(
-                    'Media Streaming Platform',
-                    'Full-featured media distribution platform with live streaming, '
-                    'content management, and user analytics.',
-                    ['Android', 'Kotlin', 'Firebase', 'Real-time Sync'],
-                  ),
-                  _buildProjectCard(
-                    'E-Commerce Mobile App',
-                    'Complete e-commerce solution with payment gateway integration, '
-                    'product catalog, and order tracking.',
-                    ['Android', 'iOS', 'Payment Gateway', 'Analytics'],
-                  ),
-                  _buildProjectCard(
-                    'AR Product Visualization',
-                    'Augmented reality features for product visualization and virtual try-on experiences.',
-                    ['Android', 'ARCore', 'AR', 'Java'],
-                  ),
-                ],
+              // Tech Arsenal
+              _buildSection(
+                AppLocalizations.of(context)!.skillsTitle,
+                GridView.count(
+                  crossAxisCount: MediaQuery.of(context).size.width > 1200
+                      ? 6
+                      : (MediaQuery.of(context).size.width > 800 ? 4 : 3),
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _buildTechIcon('Android', Icons.android),
+                    _buildTechIcon('iOS', Icons.apple),
+                    _buildTechIcon('Flutter', Icons.flutter_dash),
+                    _buildTechIcon('Java', Icons.code),
+                    _buildTechIcon('Kotlin', Icons.code),
+                    _buildTechIcon('Swift', Icons.code),
+                    _buildTechIcon('Firebase', Icons.cloud),
+                    _buildTechIcon('REST API', Icons.api),
+                    _buildTechIcon('SQLite', Icons.storage),
+                    _buildTechIcon('MVVM', Icons.architecture),
+                    _buildTechIcon('Clean Code', Icons.cleaning_services),
+                    _buildTechIcon('Git', Icons.commit),
+                  ],
+                ),
               ),
-              key: _projectsKey,
-            ),
 
-            // Skills Matrix
-            _buildSection(
-              'Skills & Proficiency',
-              GridView.count(
-                crossAxisCount: MediaQuery.of(context).size.width > 800 ? 2 : 1,
-                crossAxisSpacing: 40,
-                mainAxisSpacing: 40,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  _buildSkillRow('Java', 0.95),
-                  _buildSkillRow('Android Development', 0.95),
-                  _buildSkillRow('Mobile Architecture', 0.90),
-                  _buildSkillRow('Kotlin', 0.85),
-                  _buildSkillRow('iOS Development', 0.85),
-                  _buildSkillRow('AR/VR Development', 0.80),
-                ],
+              // Featured Projects
+              _buildSection(
+                AppLocalizations.of(context)!.projectsTitle,
+                GridView.count(
+                  crossAxisCount: MediaQuery.of(context).size.width > 1200
+                      ? 3
+                      : (MediaQuery.of(context).size.width > 800 ? 2 : 1),
+                  crossAxisSpacing: 20,
+                  mainAxisSpacing: 20,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _buildProjectCard(
+                      'Retail Workforce Solutions',
+                      'Enterprise platform for retail management with real-time employee scheduling '
+                          'and task synchronization across multiple stores.',
+                      ['Android', 'Java', 'REST API', 'SQLite'],
+                    ),
+                    _buildProjectCard(
+                      'Media Streaming Platform',
+                      'Full-featured media distribution platform with live streaming, '
+                          'content management, and user analytics.',
+                      ['Android', 'Kotlin', 'Firebase', 'Real-time Sync'],
+                    ),
+                    _buildProjectCard(
+                      'E-Commerce Mobile App',
+                      'Complete e-commerce solution with payment gateway integration, '
+                          'product catalog, and order tracking.',
+                      ['Android', 'iOS', 'Payment Gateway', 'Analytics'],
+                    ),
+                    _buildProjectCard(
+                      'AR Product Visualization',
+                      'Augmented reality features for product visualization and virtual try-on experiences.',
+                      ['Android', 'ARCore', 'AR', 'Java'],
+                    ),
+                  ],
+                ),
+                key: _projectsKey,
               ),
-              key: _skillsKey,
-            ),
 
-            // Contact Section
-            Container(
-              key: _contactKey,
-              padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ShaderMask(
-                    shaderCallback: (bounds) => LinearGradient(
-                      colors: [accentColor, accentSecondary],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ).createShader(bounds),
-                    child: const Text(
-                      'Let\'s Build Something Amazing',
-                      style: TextStyle(
-                        fontSize: 48,
-                        fontWeight: FontWeight.bold,
-                        color: textLight,
+              // Skills Matrix
+              _buildSection(
+                'Skills & Proficiency',
+                GridView.count(
+                  crossAxisCount: MediaQuery.of(context).size.width > 800
+                      ? 2
+                      : 1,
+                  crossAxisSpacing: 40,
+                  mainAxisSpacing: 40,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _buildSkillRow('Java', 0.95),
+                    _buildSkillRow('Android Development', 0.95),
+                    _buildSkillRow('Mobile Architecture', 0.90),
+                    _buildSkillRow('Kotlin', 0.85),
+                    _buildSkillRow('iOS Development', 0.85),
+                    _buildSkillRow('AR/VR Development', 0.80),
+                  ],
+                ),
+                key: _skillsKey,
+              ),
+
+              // Contact Section
+              Container(
+                key: _contactKey,
+                padding: const EdgeInsets.symmetric(
+                  vertical: 100,
+                  horizontal: 40,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    ShaderMask(
+                      shaderCallback: (bounds) => LinearGradient(
+                        colors: [accentColor, accentSecondary],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(bounds),
+                      child: Text(
+                        AppLocalizations.of(context)!.contactTitle,
+                        style: const TextStyle(
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                          color: textLight,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    'Ready for exciting opportunities, collaborations, and fresh challenges in mobile development',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: textGray,
+                    const SizedBox(height: 20),
+                    Text(
+                      'Ready for exciting opportunities, collaborations, and fresh challenges in mobile development',
+                      style: TextStyle(fontSize: 18, color: textGray),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 60),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      _buildContactForm(),
-                      const SizedBox(width: 60),
-                      _buildContactInfo(),
-                    ],
-                  ),
-                  const SizedBox(height: 60),
-                  const Text(
-                    '© 2026 Ahmed Essam. Crafted with ❤️ for mobile innovation.',
-                    style: TextStyle(
-                      color: textGray,
-                      fontSize: 14,
+                    const SizedBox(height: 60),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _buildContactForm(),
+                        const SizedBox(width: 60),
+                        _buildContactInfo(),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 60),
+                    Text(
+                      AppLocalizations.of(context)!.footerCopyright,
+                      style: const TextStyle(color: textGray, fontSize: 14),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -400,6 +460,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   Widget _buildSection(String title, Widget child, {GlobalKey? key}) {
     return Container(
       key: key,
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 40),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -479,70 +540,111 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           const SizedBox(height: 16),
           Text(
             description,
-            style: const TextStyle(
-              fontSize: 16,
-              color: textGray,
-              height: 1.6,
-            ),
+            style: const TextStyle(fontSize: 16, color: textGray, height: 1.6),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCareerStep(String company, String role, String period, String url) {
-    return GestureDetector(
-      onTap: () => launchUrl(Uri.parse(url)),
+  Widget _buildCareerStep(
+    String company,
+    String role,
+    String period,
+    String url,
+  ) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
       child: Container(
-        width: 280,
+        width: 300,
         margin: const EdgeInsets.symmetric(horizontal: 8),
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: cardBg,
+        child: Material(
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: accentColor.withOpacity(0.4)),
-          boxShadow: [
-            BoxShadow(
-              color: accentColor.withOpacity(0.15),
-              blurRadius: 20,
-              offset: const Offset(0, 8),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18),
+            hoverColor: accentColor.withOpacity(0.13),
+            onTap: () => launchUrl(Uri.parse(url)),
+            child: Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: cardBg,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: accentColor.withOpacity(0.4)),
+                boxShadow: [
+                  BoxShadow(
+                    color: accentColor.withOpacity(0.15),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+                gradient: LinearGradient(
+                  colors: [cardBg.withOpacity(0.95), cardBg],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.business_center,
+                        color: accentSecondary,
+                        size: 22,
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          company,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: textLight,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    role,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: accentSecondary,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    period,
+                    style: const TextStyle(fontSize: 14, color: textGray),
+                  ),
+                  const SizedBox(height: 14),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 6,
+                      horizontal: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: accentColor.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Text(
+                      'Tap to open',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: accentSecondary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-          gradient: LinearGradient(
-            colors: [cardBg.withOpacity(0.95), cardBg],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              company,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: textLight,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              role,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: accentSecondary,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              period,
-              style: const TextStyle(
-                fontSize: 14,
-                color: textGray,
-              ),
-            ),
-          ],
         ),
       ),
     );
@@ -551,11 +653,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   Widget _buildCareerArrow() {
     return const Padding(
       padding: EdgeInsets.symmetric(horizontal: 4),
-      child: Icon(
-        Icons.arrow_forward_ios,
-        color: accentColor,
-        size: 16,
-      ),
+      child: Icon(Icons.arrow_forward_ios, color: accentColor, size: 16),
     );
   }
 
@@ -567,10 +665,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         border: Border.all(color: accentColor.withOpacity(0.3)),
         borderRadius: BorderRadius.circular(25),
         boxShadow: [
-          BoxShadow(
-            color: accentColor.withOpacity(0.1),
-            blurRadius: 5,
-          ),
+          BoxShadow(color: accentColor.withOpacity(0.1), blurRadius: 5),
         ],
       ),
       child: Text(
@@ -602,11 +697,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: 32,
-            color: accentColor,
-          ),
+          Icon(icon, size: 32, color: accentColor),
           const SizedBox(height: 8),
           Text(
             name,
@@ -648,19 +739,20 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           Container(
             height: 200,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
               gradient: LinearGradient(
-                colors: [accentColor.withOpacity(0.2), accentSecondary.withOpacity(0.2)],
+                colors: [
+                  accentColor.withOpacity(0.2),
+                  accentSecondary.withOpacity(0.2),
+                ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
             ),
             child: const Center(
-              child: Icon(
-                Icons.phone_android,
-                size: 60,
-                color: accentColor,
-              ),
+              child: Icon(Icons.phone_android, size: 60, color: accentColor),
             ),
           ),
           Padding(
@@ -679,33 +771,36 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 const SizedBox(height: 12),
                 Text(
                   description,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: textGray,
-                    height: 1.6,
-                  ),
+                  style: TextStyle(fontSize: 16, color: textGray, height: 1.6),
                 ),
                 const SizedBox(height: 20),
                 Wrap(
                   spacing: 10,
                   runSpacing: 10,
                   children: tags
-                      .map((tag) => Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: accentColor.withOpacity(0.1),
-                              border: Border.all(color: accentColor.withOpacity(0.3)),
-                              borderRadius: BorderRadius.circular(20),
+                      .map(
+                        (tag) => Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: accentColor.withOpacity(0.1),
+                            border: Border.all(
+                              color: accentColor.withOpacity(0.3),
                             ),
-                            child: Text(
-                              tag,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: accentColor,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            tag,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: accentColor,
+                              fontWeight: FontWeight.w600,
                             ),
-                          ))
+                          ),
+                        ),
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: 20),
@@ -716,7 +811,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: accentColor,
                         foregroundColor: textLight,
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -728,7 +826,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       onPressed: () {},
                       style: OutlinedButton.styleFrom(
                         side: BorderSide(color: accentColor.withOpacity(0.5)),
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20,
+                          vertical: 10,
+                        ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -893,7 +994,8 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           ),
           const SizedBox(height: 24),
           ElevatedButton(
-            onPressed: () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
+            onPressed: () =>
+                launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
             style: ElevatedButton.styleFrom(
               backgroundColor: accentColor,
               foregroundColor: primaryBg,
@@ -905,10 +1007,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             ),
             child: const Text(
               'Send Message',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
           ),
         ],
@@ -939,7 +1038,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           children: [
             _buildSocialIcon('GitHub', 'https://github.com/ahmedessameldeen'),
             const SizedBox(width: 16),
-            _buildSocialIcon('LinkedIn', 'https://linkedin.com/in/ahmedessamedeen'),
+            _buildSocialIcon(
+              'LinkedIn',
+              'https://linkedin.com/in/ahmedessamedeen',
+            ),
           ],
         ),
       ],
@@ -949,18 +1051,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   Widget _buildContactItem(String icon, String text) {
     return Row(
       children: [
-        Text(
-          icon,
-          style: const TextStyle(fontSize: 20),
-        ),
+        Text(icon, style: const TextStyle(fontSize: 20)),
         const SizedBox(width: 12),
-        Text(
-          text,
-          style: const TextStyle(
-            fontSize: 16,
-            color: textGray,
-          ),
-        ),
+        Text(text, style: const TextStyle(fontSize: 16, color: textGray)),
       ],
     );
   }

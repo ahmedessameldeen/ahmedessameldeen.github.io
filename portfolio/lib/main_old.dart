@@ -37,7 +37,8 @@ class PortfolioHomePage extends StatefulWidget {
   State<PortfolioHomePage> createState() => _PortfolioHomePageState();
 }
 
-class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProviderStateMixin {
+class _PortfolioHomePageState extends State<PortfolioHomePage>
+    with TickerProviderStateMixin {
   // keys for scrolling to specific sections
   final GlobalKey _projectsKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
@@ -66,9 +67,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
       duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
-    _heroAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(parent: _heroController, curve: Curves.easeOut),
-    );
+    _heroAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(parent: _heroController, curve: Curves.easeOut));
     _heroController.forward();
 
     _scrollController = AnimationController(
@@ -122,7 +124,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                     ),
                   ],
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                  vertical: 16,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -201,9 +206,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ScaleTransition(
-                              scale: Tween<double>(begin: 0.5, end: 1.0).animate(
-                                CurvedAnimation(parent: _heroController, curve: Curves.easeOut),
-                              ),
+                              scale: Tween<double>(begin: 0.5, end: 1.0)
+                                  .animate(
+                                    CurvedAnimation(
+                                      parent: _heroController,
+                                      curve: Curves.easeOut,
+                                    ),
+                                  ),
                               child: Container(
                                 width: 120,
                                 height: 120,
@@ -219,7 +228,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                                   ),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: const Color(0xFF3B82F6).withOpacity(0.4),
+                                      color: const Color(
+                                        0xFF3B82F6,
+                                      ).withOpacity(0.4),
                                       blurRadius: 30,
                                       spreadRadius: 5,
                                     ),
@@ -247,7 +258,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                             const SizedBox(height: 12),
                             ShaderMask(
                               shaderCallback: (bounds) => LinearGradient(
-                                colors: const [Color(0xFF3B82F6), Color(0xFF8B5CF6)],
+                                colors: const [
+                                  Color(0xFF3B82F6),
+                                  Color(0xFF8B5CF6),
+                                ],
                               ).createShader(bounds),
                               child: const Text(
                                 'Mobile Developer',
@@ -298,7 +312,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
             _buildSection(
               'About Me',
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 60,
+                  horizontal: 40,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -378,7 +395,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
             _buildSection(
               'Technical Skills',
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 60,
+                  horizontal: 40,
+                ),
                 child: Column(
                   children: [
                     Wrap(
@@ -386,11 +406,23 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                       runSpacing: 30,
                       children: [
                         _buildSkillCardAnimated('Java', 0.95, Icons.code),
-                        _buildSkillCardAnimated('Android', 0.95, Icons.smartphone),
-                        _buildSkillCardAnimated('AR/VR', 0.85, Icons.view_in_ar),
+                        _buildSkillCardAnimated(
+                          'Android',
+                          0.95,
+                          Icons.smartphone,
+                        ),
+                        _buildSkillCardAnimated(
+                          'AR/VR',
+                          0.85,
+                          Icons.view_in_ar,
+                        ),
                         _buildSkillCardAnimated('iOS', 0.85, Icons.apple),
                         _buildSkillCardAnimated('Kotlin', 0.80, Icons.code),
-                        _buildSkillCardAnimated('Architecture', 0.90, Icons.cloud),
+                        _buildSkillCardAnimated(
+                          'Architecture',
+                          0.90,
+                          Icons.cloud,
+                        ),
                       ],
                     ),
                     const SizedBox(height: 60),
@@ -423,7 +455,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
             _buildSection(
               'Professional Experience',
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 60,
+                  horizontal: 40,
+                ),
                 child: Column(
                   children: [
                     _buildExperienceTimelineItem(
@@ -466,7 +501,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
               'Featured Projects',
               Container(
                 key: _projectsKey,
-                padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 60,
+                  horizontal: 40,
+                ),
                 child: Column(
                   children: [
                     const Text(
@@ -521,7 +559,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
             _buildSection(
               'Education & Certifications',
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 60,
+                  horizontal: 40,
+                ),
                 child: Column(
                   children: [
                     _buildEducationCard(
@@ -563,10 +604,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [
-                    const Color(0xFF0F172A),
-                    const Color(0xFF1E293B),
-                  ],
+                  colors: [const Color(0xFF0F172A), const Color(0xFF1E293B)],
                 ),
               ),
               padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 40),
@@ -596,7 +634,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                       _buildContactIconButton(
                         Icons.email,
                         'ahmedessamedeen@gmail.com',
-                        () => launchUrl(Uri.parse('mailto:ahmedessamedeen@gmail.com')),
+                        () => launchUrl(
+                          Uri.parse('mailto:ahmedessamedeen@gmail.com'),
+                        ),
                       ),
                       const SizedBox(width: 30),
                       _buildContactIconButton(
@@ -608,7 +648,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                       _buildContactIconButton(
                         Icons.language,
                         'LinkedIn',
-                        () => launchUrl(Uri.parse('https://linkedin.com/in/ahmedessamedeen')),
+                        () => launchUrl(
+                          Uri.parse('https://linkedin.com/in/ahmedessamedeen'),
+                        ),
                       ),
                     ],
                   ),
@@ -662,9 +704,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
         decoration: BoxDecoration(
           color: outlined ? Colors.transparent : bgColor,
-          border: outlined
-              ? Border.all(color: Colors.white, width: 2)
-              : null,
+          border: outlined ? Border.all(color: Colors.white, width: 2) : null,
           borderRadius: BorderRadius.circular(50),
           boxShadow: !outlined
               ? [
@@ -700,9 +740,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
           ],
         ),
         borderRadius: BorderRadius.circular(50),
-        border: Border.all(
-          color: const Color(0xFF3B82F6).withOpacity(0.3),
-        ),
+        border: Border.all(color: const Color(0xFF3B82F6).withOpacity(0.3)),
       ),
       child: Text(
         skill,
@@ -760,7 +798,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                 value: proficiency,
                 minHeight: 6,
                 backgroundColor: Colors.grey[200],
-                valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF3B82F6)),
+                valueColor: const AlwaysStoppedAnimation<Color>(
+                  Color(0xFF3B82F6),
+                ),
               ),
             ),
             const SizedBox(height: 8),
@@ -790,10 +830,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
           width: 2,
         ),
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-          ),
+          BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 10),
         ],
       ),
       child: Column(
@@ -912,7 +949,11 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
                         ),
                         Row(
                           children: [
-                            const Icon(Icons.location_on, size: 12, color: Colors.grey),
+                            const Icon(
+                              Icons.location_on,
+                              size: 12,
+                              color: Colors.grey,
+                            ),
                             const SizedBox(width: 4),
                             Text(
                               location,
@@ -1000,21 +1041,28 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
-                children: tech.map((t) => Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF3B82F6).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Text(
-                    t,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: Color(0xFF3B82F6),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                )).toList(),
+                children: tech
+                    .map(
+                      (t) => Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF3B82F6).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Text(
+                          t,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: Color(0xFF3B82F6),
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           ),
@@ -1039,10 +1087,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
           width: 2,
         ),
         boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            blurRadius: 10,
-          ),
+          BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 10),
         ],
       ),
       child: Row(
@@ -1108,9 +1153,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
           ],
         ),
         borderRadius: BorderRadius.circular(50),
-        border: Border.all(
-          color: const Color(0xFF3B82F6).withOpacity(0.3),
-        ),
+        border: Border.all(color: const Color(0xFF3B82F6).withOpacity(0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -1202,10 +1245,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> with TickerProvid
             ],
           ),
         ),
-        Container(
-          color: Colors.grey[50],
-          child: content,
-        ),
+        Container(color: Colors.grey[50], child: content),
       ],
     );
   }
