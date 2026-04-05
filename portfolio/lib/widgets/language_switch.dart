@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/language_provider.dart';
-import '../l10n/app_localizations.dart';
 
 class LanguageSwitch extends StatelessWidget {
   const LanguageSwitch({super.key});
@@ -9,7 +8,6 @@ class LanguageSwitch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final languageProvider = Provider.of<LanguageProvider>(context);
-    final isRTL = languageProvider.isRTL;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
