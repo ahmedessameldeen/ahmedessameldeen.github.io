@@ -4,6 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:portfolio/l10n/app_localizations.dart';
 import 'package:portfolio/providers/language_provider.dart';
 import 'package:portfolio/src/constants.dart';
+import 'package:portfolio/src/animations.dart';
+import 'package:portfolio/src/widgets.dart';
 import 'package:portfolio/widgets/language_switch.dart';
 
 class PortfolioHomePage extends StatefulWidget {
@@ -101,6 +103,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             children: [
               _buildHeroSection(context),
               _buildJourneySection(context),
+              _buildStackShowcaseSection(context),
               _buildSkillsSection(context),
               _buildProjectsSection(context),
               _buildContactSection(context),
@@ -118,9 +121,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         vertical: 120,
         horizontal: 40,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+      child: FadeInUp(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
           ShaderMask(
             shaderCallback: (bounds) => LinearGradient(
               colors: [accentColor, accentSecondary],
@@ -220,6 +224,16 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
           ),
         ],
       ),
+      ),
+    );
+  }
+
+  Widget _buildStackShowcaseSection(BuildContext context) {
+    return _buildSection(
+      'Development Stack',
+      FadeInUp(
+        child: const TechStackShowcase(),
+      ),
     );
   }
 
@@ -302,39 +316,41 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   Widget _buildProjectsSection(BuildContext context) {
     return _buildSection(
       AppLocalizations.of(context)!.projectsTitle,
-      GridView.count(
-        crossAxisCount: MediaQuery.of(context).size.width > 1200
-            ? 3
-            : (MediaQuery.of(context).size.width > 800 ? 2 : 1),
-        crossAxisSpacing: 20,
-        mainAxisSpacing: 20,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          _buildProjectCard(
-            'Retail Workforce Solutions',
-            'Enterprise platform for retail management with real-time employee scheduling '
-                'and task synchronization across multiple stores.',
-            ['Android', 'Java', 'REST API', 'SQLite'],
-          ),
-          _buildProjectCard(
-            'Media Streaming Platform',
-            'Full-featured media distribution platform with live streaming, '
-                'content management, and user analytics.',
-            ['Android', 'Kotlin', 'Firebase', 'Real-time Sync'],
-          ),
-          _buildProjectCard(
-            'E-Commerce Mobile App',
-            'Complete e-commerce solution with payment gateway integration, '
-                'product catalog, and order tracking.',
-            ['Android', 'iOS', 'Payment Gateway', 'Analytics'],
-          ),
-          _buildProjectCard(
-            'AR Product Visualization',
-            'Augmented reality features for product visualization and virtual try-on experiences.',
-            ['Android', 'ARCore', 'AR', 'Java'],
-          ),
-        ],
+      FadeInUp(
+        child: GridView.count(
+          crossAxisCount: MediaQuery.of(context).size.width > 1200
+              ? 3
+              : (MediaQuery.of(context).size.width > 800 ? 2 : 1),
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            _buildProjectCard(
+              'Retail Workforce Solutions',
+              'Enterprise platform for retail management with real-time employee scheduling '
+                  'and task synchronization across multiple stores.',
+              ['Android', 'Java', 'REST API', 'SQLite'],
+            ),
+            _buildProjectCard(
+              'Media Streaming Platform',
+              'Full-featured media distribution platform with live streaming, '
+                  'content management, and user analytics.',
+              ['Android', 'Kotlin', 'Firebase', 'Real-time Sync'],
+            ),
+            _buildProjectCard(
+              'E-Commerce Mobile App',
+              'Complete e-commerce solution with payment gateway integration, '
+                  'product catalog, and order tracking.',
+              ['Android', 'iOS', 'Payment Gateway', 'Analytics'],
+            ),
+            _buildProjectCard(
+              'AR Product Visualization',
+              'Augmented reality features for product visualization and virtual try-on experiences.',
+              ['Android', 'ARCore', 'AR', 'Java'],
+            ),
+          ],
+        ),
       ),
       key: _projectsKey,
     );
@@ -627,40 +643,72 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                       )
                       .toList(),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 24),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: accentColor,
-                        foregroundColor: textLight,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          HoverScaleButton(
+                            onTap: () {},
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: accentColor,
+                                foregroundColor: textLight,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text('View Demo'),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          HoverScaleButton(
+                            onTap: () {},
+                            child: OutlinedButton(
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(
+                                side: BorderSide(
+                                  color: accentColor.withOpacity(0.5),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 20,
+                                  vertical: 10,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: const Text(
+                                'GitHub',
+                                style: TextStyle(color: accentColor),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      child: const Text('View Demo'),
                     ),
-                    const SizedBox(width: 12),
-                    OutlinedButton(
-                      onPressed: () {},
-                      style: OutlinedButton.styleFrom(
-                        side: BorderSide(color: accentColor.withOpacity(0.5)),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 10,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                      child: const Text(
-                        'GitHub',
-                        style: TextStyle(color: accentColor),
+                    const SizedBox(width: 20),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          AppStoreButton(
+                            platform: 'App Store',
+                            url: 'https://apps.apple.com',
+                          ),
+                          SizedBox(width: 12),
+                          AppStoreButton(
+                            platform: 'Google Play',
+                            url: 'https://play.google.com',
+                          ),
+                        ],
                       ),
                     ),
                   ],
